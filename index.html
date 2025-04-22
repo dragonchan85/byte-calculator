@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>바이트 계산기</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+        }
+
+        label {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>바이트 계산기</h1>
+
+        <label for="value">값 입력 (숫자):</label>
+        <input type="number" id="value" placeholder="숫자를 입력하세요" />
+
+        <label for="fromUnit">단위 선택 (변환할 단위):</label>
+        <select id="fromUnit">
+            <option value="B">바이트 (B)</option>
+            <option value="KB">킬로바이트 (KB)</option>
+            <option value="MB">메가바이트 (MB)</option>
+            <option value="GB">기가바이트 (GB)</option>
+            <option value="TB">테라바이트 (TB)</option>
+        </select>
+
+        <label for="toUnit">단위 선택 (변환할 단위):</label>
+        <select id="toUnit">
+            <option value="B">바이트 (B)</option>
+            <option value="KB">킬로바이트 (KB)</option>
+            <option value="MB">메가바이트 (MB)</option>
+            <option value="GB">기가바이트 (GB)</option>
+            <option value="TB">테라바이트 (TB)</option>
+        </select>
+
+        <button onclick="convertBytes()">변환하기</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function convertBytes() {
+            // 입력값과 단위 선택
+            let value = parseFloat(document.getElementById("value").value);
+            let fromUnit = document.getElementById("fromUnit").value;
+            let toUnit = document.getElementById("toUnit").value;
+
+            // 단위 간 변환 비율 정의
+            const units = {
+                "B": 1,
+                "KB": 1024,
+                "MB": 1024 ** 2,
+                "GB": 1024 ** 3,
+                "TB": 1024 ** 4
+            };
+
+            // 값이 숫자인지 체크
+            if (isNaN(value) || value <= 0) {
+                alert("유효한 값을 입력하세요.");
+                return;
+            }
+
+            // 입력값을 바이트로 변환
+            let valueInBytes = value * units[fromUnit];
+
+            // 바이트에서 원하는 단위로 변환
+            let result = valueInBytes / units[toUnit];
+
+            // 결과 출력
+            document.getElementById("result").textContent = `${value} ${fromUnit} = ${result.toFixed(2)} ${toUnit}`;
+        }
+    </script>
+
+</body>
+</html>
